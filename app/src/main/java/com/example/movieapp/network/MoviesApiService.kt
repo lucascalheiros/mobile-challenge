@@ -6,8 +6,9 @@ import com.example.movieapp.model.Movie
 import com.example.movieapp.model.Pagination
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Call
+import io.reactivex.Single
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -21,6 +22,7 @@ private val moshi = Moshi.Builder()
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     .baseUrl(BASE_URL)
     .build()
 
@@ -28,11 +30,12 @@ interface MoviesApiService {
     @GET("movie/now_playing")
     fun getNowPlayingMovies(@Query("page") page: Int,
                             @Query("api_key") apiKey: String = API_KEY
-    ): Call<Pagination<List<Movie>>>
+    ): Single<Pagination<List<Movie>>>
 
     @GET("genre/movie/list")
     fun getGenres(@Query("api_key") apiKey: String = API_KEY
-    ): Call<Genres<List<Genre>>>
+    ): Single<Genres<List<Genre>>>
+
 
 }
 
