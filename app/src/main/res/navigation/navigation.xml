@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/nowPlayingFragment"
+        android:name="com.example.movieapp.view.nowPlaying.NowPlayingFragment"
+        android:label="NowPlayingFragment" >
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.movieapp.view.movieDetail.MovieDetailFragment"
+        android:label="MovieDetailFragment">
+        <argument
+            android:name="movieModel"
+            app:argType="com.example.movieapp.model.Movie"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.movieapp.view.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+</navigation>

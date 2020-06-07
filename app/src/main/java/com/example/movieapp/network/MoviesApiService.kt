@@ -37,6 +37,14 @@ interface MoviesApiService {
     ): Single<Genres<List<Genre>>>
 
 
+    @GET("search/movie")
+    fun getSearchMovies(@Query("query") query: String,
+                        @Query("page") page: Int,
+                        @Query("api_key") apiKey: String = API_KEY
+    ): Single<Pagination<List<Movie>>>
+
+//    @GET("movie/{id}")
+//    fun getMovie(@Path("id") id: Int, @Query("api_key") apiKey: String = API_KEY): Call<Movie>
 }
 
 object MoviesApi {
