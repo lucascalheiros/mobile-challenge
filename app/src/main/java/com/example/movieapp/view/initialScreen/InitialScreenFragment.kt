@@ -22,6 +22,9 @@ class InitialScreenFragment : Fragment() {
         binding.toSearchBtn.setOnClickListener {
             it.findNavController().navigate(InitialScreenFragmentDirections.actionInitialScreenToSearchFragment())
         }
+        binding.toVisualizedBtn.setOnClickListener {
+            it.findNavController().navigate(InitialScreenFragmentDirections.actionInitialScreenToVisualizedFragment())
+        }
         return binding.root
     }
 }

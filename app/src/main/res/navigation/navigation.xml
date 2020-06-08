@@ -41,5 +41,16 @@
         <action
             android:id="@+id/action_initialScreen_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_initialScreen_to_visualizedFragment"
+            app:destination="@id/visualizedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/visualizedFragment"
+        android:name="com.example.movieapp.view.visualized.VisualizedFragment"
+        android:label="VisualizedFragment" >
+        <action
+            android:id="@+id/action_visualizedFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 </navigation>

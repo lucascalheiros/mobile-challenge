@@ -11,4 +11,6 @@
     <string name="language">Language:</string>
     <string name="nowplaying_movies">NowPlaying Movies</string>
     <string name="tittle">Tittle:</string>
+    <string name="visualized_movies">Visualized Movies</string>
+    <string name="clear">Clear</string>
 </resources>
