@@ -18,9 +18,9 @@ data class Pagination<T>(
 data class Movie(
     val id: Int,
     val title: String,
-    val overview: String,
-    @Json(name = "release_date") val releaseDate: String,
-    @Json(name = "original_language") val originalLanguage: String,
+    val overview: String? = null,
+    @Json(name = "release_date") val releaseDate: String? = null,
+    @Json(name = "original_language") val originalLanguage: String? = null,
     var genres: List<Genre> = listOf<Genre>(),
     @Json(name = "genre_ids") val genreIds: List<Int> = listOf<Int>(),
     @Json(name = "poster_path") val posterPath: String? = null
