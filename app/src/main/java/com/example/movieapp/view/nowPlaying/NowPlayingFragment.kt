@@ -13,6 +13,7 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentNowPlayingBinding
 import com.example.movieapp.model.Movie
 import com.example.movieapp.view.MoviesListAdapter
+import com.example.movieapp.view.PaginationController
 
 class NowPlayingFragment : Fragment() {
 
@@ -23,12 +24,12 @@ class NowPlayingFragment : Fragment() {
     }
     private val nowPlayingViewModel = NowPlayingViewModel()
     private val adapter = MoviesListAdapter(listClickAction)
-    private val paginationController = NowPlayingPaginationController(adapter, nowPlayingViewModel)
+    private val paginationController = PaginationController(adapter, nowPlayingViewModel)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        paginationController.start()
+        paginationController.start("")
         nowPlayingViewModel.moviesLiveData.observe(this,
             Observer<List<Movie>> { movies ->
                 adapter.add(movies)

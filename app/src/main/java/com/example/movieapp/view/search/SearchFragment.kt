@@ -14,6 +14,7 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentSearchBinding
 import com.example.movieapp.model.Movie
 import com.example.movieapp.view.MoviesListAdapter
+import com.example.movieapp.view.PaginationController
 
 class SearchFragment : Fragment() {
 
@@ -23,7 +24,7 @@ class SearchFragment : Fragment() {
     }
     private val searchViewModel = SearchViewModel()
     private val adapter = MoviesListAdapter(listClickAction)
-    private val paginationController = SearchPaginationController(adapter, searchViewModel)
+    private val paginationController = PaginationController(adapter, searchViewModel)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

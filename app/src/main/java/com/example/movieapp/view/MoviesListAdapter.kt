@@ -11,11 +11,11 @@ import com.example.movieapp.model.Movie
 import com.example.movieapp.view.nowPlaying.NowPlayingFragmentDirections
 import io.reactivex.subjects.PublishSubject
 
-class MoviesListAdapter(val onClickCallback: (movie: Movie, view: View) -> Unit) : RecyclerView.Adapter<MoviesListAdapter.ViewHolder>() {
+class MoviesListAdapter(private val onClickCallback: (movie: Movie, view: View) -> Unit) : RecyclerView.Adapter<MoviesListAdapter.ViewHolder>(), PaginationController.PageRequester {
 
-    val requestPageSubject: PublishSubject<Boolean> = PublishSubject.create<Boolean>()
+    override val pageRequest: PublishSubject<Boolean> = PublishSubject.create<Boolean>()
 
-    var movies: MutableList<Movie> = mutableListOf<Movie>()
+    private var movies: MutableList<Movie> = mutableListOf<Movie>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -36,8 +36,9 @@ class MoviesListAdapter(val onClickCallback: (movie: Movie, view: View) -> Unit)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = movies[position]
         holder.bind(item)
+        // Request a page if we are at 10 positions to the end
         if (position + 10 > itemCount) {
-            requestPageSubject.onNext(true)
+            pageRequest.onNext(true)
         }
     }
 
