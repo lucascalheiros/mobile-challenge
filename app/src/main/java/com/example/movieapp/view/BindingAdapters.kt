@@ -1,6 +1,5 @@
 package com.example.movieapp.view
 
-import android.content.res.Resources
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -15,7 +14,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .error(android.R.drawable.ic_menu_close_clear_cancel)
             .into(imgView)
     } else {
-        val drawable = Resources.getSystem().getDrawable(android.R.drawable.ic_menu_close_clear_cancel)
-        imgView.setImageDrawable(drawable)
-    }
+        Glide.with(imgView.context)
+            .load(android.R.drawable.ic_menu_close_clear_cancel)
+            .into(imgView)    }
 }
