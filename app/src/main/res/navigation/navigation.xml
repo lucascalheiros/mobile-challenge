@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/searchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/initialScreen">
 
     <fragment
         android:id="@+id/nowPlayingFragment"
@@ -27,5 +29,17 @@
         <action
             android:id="@+id/action_searchFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/initialScreen"
+        android:name="com.example.movieapp.view.initialScreen.InitialScreenFragment"
+        android:label="fragment_initial_screen"
+        tools:layout="@layout/fragment_initial_screen" >
+        <action
+            android:id="@+id/action_initialScreen_to_nowPlayingFragment"
+            app:destination="@id/nowPlayingFragment" />
+        <action
+            android:id="@+id/action_initialScreen_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 </navigation>

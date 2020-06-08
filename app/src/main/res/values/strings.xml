@@ -3,4 +3,12 @@
     <string name="poster_image">Poster image</string>
     <string name="search_tittle">Search Tittle</string>
     <string name="search">Search</string>
+    <string name="search_title">Search Title</string>
+    <string name="movie_searcher">Movie Searcher</string>
+    <string name="overview">Overview:</string>
+    <string name="genre">Genre:</string>
+    <string name="release">Release:</string>
+    <string name="language">Language:</string>
+    <string name="nowplaying_movies">NowPlaying Movies</string>
+    <string name="tittle">Tittle:</string>
 </resources>
