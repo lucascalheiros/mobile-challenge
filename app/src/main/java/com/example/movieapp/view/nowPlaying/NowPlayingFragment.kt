@@ -14,38 +14,41 @@ import com.example.movieapp.databinding.FragmentNowPlayingBinding
 import com.example.movieapp.model.Movie
 import com.example.movieapp.view.MoviesListAdapter
 
-class NowPlayingFragment: Fragment() {
-    var listClickAction: (Movie, View) -> Unit = {
-            movie, view ->
-        val action = NowPlayingFragmentDirections.actionNowPlayingFragmentToMovieDetailFragment(movie)
+class NowPlayingFragment : Fragment() {
+
+    private val listClickAction: (Movie, View) -> Unit = { movie, view ->
+        val action =
+            NowPlayingFragmentDirections.actionNowPlayingFragmentToMovieDetailFragment(movie)
         view.findNavController().navigate(action)
     }
     private val nowPlayingViewModel = NowPlayingViewModel()
     private val adapter = MoviesListAdapter(listClickAction)
+    private val paginationController = NowPlayingPaginationController(adapter, nowPlayingViewModel)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+        paginationController.start()
+        nowPlayingViewModel.moviesLiveData.observe(this,
+            Observer<List<Movie>> { movies ->
+                adapter.add(movies)
+            }
+        )
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val binding: FragmentNowPlayingBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_now_playing, container, false)
-
+            inflater, R.layout.fragment_now_playing, container, false
+        )
         val recyclerView = binding.nowPlayingRecycler
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
         recyclerView.adapter = adapter
 
-        val paginationController = NowPlayingPaginationController(recyclerView, nowPlayingViewModel)
-        paginationController.start()
-
-        nowPlayingViewModel.moviesLiveData.observe(this,
-            Observer<List<Movie>> { movies->
-                adapter.add(movies)}
-        )
-
         return binding.root
     }
 
-
-
 }
-

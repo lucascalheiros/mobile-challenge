@@ -1,15 +1,14 @@
 package com.example.movieapp.view.search
 
-import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.view.MoviesListAdapter
 import io.reactivex.disposables.CompositeDisposable
 
-class SearchPaginationController(private val recyclerView: RecyclerView, private val viewModel: SearchViewModel) {
+class SearchPaginationController(private val adapter: MoviesListAdapter, private val viewModel: SearchViewModel) {
 
     private val compositeDisposable = CompositeDisposable()
 
     fun start(searchText: String) {
+        stop()
         var currentPage = 0
         var totalPages = 1
         var waitingResponse = true
@@ -24,10 +23,9 @@ class SearchPaginationController(private val recyclerView: RecyclerView, private
             waitingResponse = false
         })
 
-        val disposable2 = (recyclerView.adapter as MoviesListAdapter).requestPageSubject.subscribe {
+        val disposable2 = adapter.requestPageSubject.subscribe {
             if (!waitingResponse && currentPage < totalPages) {
                 waitingResponse = true
-                Log.i("RRRRRRRRRRRRRRRRRRRRRRRRRRRRr","R de  requisição")
                 viewModel.loadPage(currentPage + 1, searchText)
             }
         }
@@ -39,8 +37,8 @@ class SearchPaginationController(private val recyclerView: RecyclerView, private
     }
 
 
-    fun stop() {
-        compositeDisposable.dispose()
+    private fun stop() {
+        compositeDisposable.clear()
     }
 
 

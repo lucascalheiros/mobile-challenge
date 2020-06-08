@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.view.MoviesListAdapter
 import io.reactivex.disposables.CompositeDisposable
 
-class NowPlayingPaginationController(private val recyclerView: RecyclerView, private val viewModel: NowPlayingViewModel) {
+class NowPlayingPaginationController(private val adapter: MoviesListAdapter, private val viewModel: NowPlayingViewModel) {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -23,7 +23,7 @@ class NowPlayingPaginationController(private val recyclerView: RecyclerView, pri
             waitingResponse = false
         })
 
-        val disposable2 = (recyclerView.adapter as MoviesListAdapter).requestPageSubject.subscribe {
+        val disposable2 = adapter.requestPageSubject.subscribe {
             if (!waitingResponse && currentPage < totalPages) {
                 waitingResponse = true
                 viewModel.loadPage(currentPage + 1)

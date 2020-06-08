@@ -15,41 +15,42 @@ import com.example.movieapp.databinding.FragmentSearchBinding
 import com.example.movieapp.model.Movie
 import com.example.movieapp.view.MoviesListAdapter
 
-class SearchFragment: Fragment() {
-    var listClickAction: (Movie, View) -> Unit = {
-            movie, view ->
+class SearchFragment : Fragment() {
+
+    private val listClickAction: (Movie, View) -> Unit = { movie, view ->
         val action = SearchFragmentDirections.actionSearchFragmentToMovieDetailFragment(movie)
         view.findNavController().navigate(action)
     }
     private val searchViewModel = SearchViewModel()
     private val adapter = MoviesListAdapter(listClickAction)
+    private val paginationController = SearchPaginationController(adapter, searchViewModel)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+        searchViewModel.moviesLiveData.observe(this,
+            Observer<List<Movie>> { movies ->
+                adapter.add(movies)
+            }
+        )
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_search, container, false)
-
+            inflater, R.layout.fragment_search, container, false
+        )
         val recyclerView = binding.searchRecycler
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
         recyclerView.adapter = adapter
 
-        val paginationController = SearchPaginationController(recyclerView, searchViewModel)
-
         binding.searchButton.setOnClickListener {
-            Log.i("+++++++++++++++++++++++++++++", binding.searchBar.text.toString())
             adapter.clear()
             paginationController.start(binding.searchBar.text.toString())
-
         }
-
-        searchViewModel.moviesLiveData.observe(this,
-            Observer<List<Movie>> { movies->
-                Log.i("+++++++++++++++++++++++++++++",movies.toString())
-
-                adapter.add(movies)}
-        )
 
         return binding.root
     }
